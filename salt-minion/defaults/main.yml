@@ -1,0 +1,9 @@
+---
+# defaults file for salt-minion
+
+master: 192.168.1.2
+master_port: 54506
+sf: HLJ
+yw: taipan
+hash_type: sha256
+syndic: 192.168.1.2

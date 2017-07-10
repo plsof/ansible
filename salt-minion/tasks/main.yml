@@ -1,0 +1,26 @@
+---
+# tasks file for salt-minion
+
+- name: wget salt-minion
+  get_url:
+      url: https://repo.saltstack.com/yum/redhat/salt-repo-2016.11-2.el6.noarch.rpm
+      dest: /usr/local/src
+
+- name: install salt-minion repo
+  yum:
+      name: /usr/local/src/salt-repo-2016.11-2.el6.noarch.rpm
+
+- name: install salt-minion
+  yum:
+      name: salt-minion
+      enablerepo: salt-2016.11
+
+- name: configure salt-minion
+  template:
+      src: config.j2
+      dest: /etc/salt/minion
+  notify: start salt-minion
+
+- name: add iptables
+  lineinfile: dest=/etc/sysconfig/iptables insertafter='^-A INPUT -i lo' line='-A INPUT -s {{ syndic }} -p tcp -m multiport --sports 54505,54506 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT'
+  notify: reload iptables
