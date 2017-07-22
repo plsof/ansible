@@ -1,0 +1,28 @@
+- hosts: localhost
+  gather_facts: false
+  vars:
+    group1: qyyw
+    user1: test1
+    passwd1: test1
+    user2: test2
+    passwd2: test2
+
+  tasks:
+    - name: Make sure we have a qyyw group
+      group:
+        name: "{{ group1 }}"
+        state: present
+
+    - name: Allow qyyw group to have passwordless sudo
+      lineinfile:
+          dest: /etc/sudoers
+          state: present
+          insertafter: 'EOF'
+          line: '%{{ group1 }} ALL=(ALL) NOPASSWD: ALL'
+          validate: visudo -cf %s
+
+    - name: Add user1
+      shell: userdel -r -f "{{ user1 }}";useradd "{{ user1 }}" -G "{{ group1 }}" && echo "{{ passwd1 }}" | passwd "{{ user1 }}" --stdin
+
+    - name: Add user2
+      shell: userdel -r -f "{{ user2 }}";useradd "{{ user2 }}" -G "{{ group1 }}" && echo "{{ passwd2 }}" | passwd "{{ user2 }}" --stdin
