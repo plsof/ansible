@@ -19,7 +19,7 @@
   template:
       src: config.j2
       dest: /etc/salt/minion
-  notify: start salt-minion
+  notify: restart salt-minion
 
 - name: add iptables
   lineinfile: dest=/etc/sysconfig/iptables insertafter='^-A INPUT -i lo' line='-A INPUT -s {{ syndic }} -p tcp -m multiport --sports 54505,54506 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT'

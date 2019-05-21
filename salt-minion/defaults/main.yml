@@ -3,7 +3,5 @@
 
 master: 192.168.1.2
 master_port: 54506
-sf: HLJ
-yw: taipan
+id: SCYD
 hash_type: sha256
-syndic: 192.168.1.2

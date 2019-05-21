@@ -1,0 +1,13 @@
+---
+# tasks file for nginx-install
+
+- name: create user
+  user: name=nginx createhome=no shell=/sbin/nologin state=present
+
+- name: create log directory
+  file: path=/data/nginxlogs state=directory
+
+- name: unpack nginx.tar.gz to remote server
+  unarchive:
+      src: nginx.tar.gz
+      dest: /usr/local

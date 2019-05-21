@@ -1,0 +1,6 @@
+[test]
+172.16.13.250
+[test:vars]
+ansible_port=22
+ansible_user=root
+ansible_ssh_pass="kobe5824"

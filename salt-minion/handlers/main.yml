@@ -1,8 +1,8 @@
 ---
 # handlers file for salt-minion
 
-- name: start salt-minion
-  shell: killall salt-minion;/usr/bin/salt-minion -d
+- name: restart salt-minion
+  shell: killall salt-minion && /usr/bin/salt-minion -d
 
 - name: reload iptables
   service: name=iptables state=reloaded
